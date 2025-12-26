@@ -10,11 +10,12 @@
     <div class="hero">
       <div class="container">
         <div class="clock">
-          <span id="hrs">00</span>
+          <span id="hrs" style="color: rgb(212, 255, 0);">00</span>
           <span>:</span>
-          <span id="min">00</span>
+          <span id="min" style="color: rgb(212, 255, 0);">00</span>
           <span>:</span>
-          <span id="sec">00</span>
+          <span id="sec" style="color: rgb(212, 255, 0);">00</span>
+          <span id="ampm"></span>
         </div>
       </div>
     </div>
@@ -23,16 +24,26 @@
       let hrs = document.getElementById("hrs");
       let min = document.getElementById("min");
       let sec = document.getElementById("sec");
+      let ampmEl = document.getElementById("ampm"); // AM/PM ke liye
 
       setInterval(() => {
         let currenttime = new Date();
 
-        hrs.innerHTML =
-          (currenttime.getHours() < 10 ? "0" : "") + currenttime.getHours();
-        min.innerHTML =
-          (currenttime.getMinutes() < 10 ? "0" : "") + currenttime.getMinutes();
-        sec.innerHTML =
-          (currenttime.getSeconds() < 10 ? "0" : "") + currenttime.getSeconds();
+        let hours = currenttime.getHours(); // number (0–23)
+        let minutes = currenttime.getMinutes();
+        let seconds = currenttime.getSeconds();
+
+        // AM / PM
+        let ampm = hours >= 12 ? "PM" : "AM";
+
+        // 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+
+        hrs.innerHTML = hours < 10 ? "0" + hours : hours;
+        min.innerHTML = minutes < 10 ? "0" + minutes : minutes;
+        sec.innerHTML = seconds < 10 ? "0" + seconds : seconds;
+        ampmEl.innerHTML = ampm;
       }, 1000);
     </script>
   </body>
